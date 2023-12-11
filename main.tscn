@@ -1,0 +1,213 @@
+[gd_scene load_steps=14 format=3 uid="uid://drlotnpmg25jh"]
+
+[ext_resource type="PackedScene" uid="uid://clf1bgx5jddua" path="res://player.tscn" id="1_bjjot"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_hys7q"]
+[ext_resource type="PackedScene" uid="uid://y8nwnv46fqta" path="res://scripts/mob.tscn" id="2_c3u1l"]
+[ext_resource type="FontFile" uid="uid://dbags1hy7fa1q" path="res://fonts/Montserrat-Medium.ttf" id="4_mo2um"]
+[ext_resource type="Script" path="res://scripts/ScoreLabel.gd" id="5_sj2js"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ybem1"]
+size = Vector3(60, 2, 60)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_avm0x"]
+albedo_color = Color(0, 0.176471, 0.411765, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_43oif"]
+size = Vector3(60, 2, 60)
+
+[sub_resource type="Curve3D" id="Curve3D_ivfir"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -16.2327, 0, -15.7421, 0, 0, 0, 0, 0, 0, 16.12, 0, -15.839, 0, 0, 0, 0, 0, 0, 16.0231, 0, 18.8385, 0, 0, 0, 0, 0, 0, -16.3296, 0, 18.5479, 0, 0, 0, 0, 0, 0, -16.2327, 0, -15.7421),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0)
+}
+point_count = 5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r7wyq"]
+albedo_color = Color(0.917647, 0.415686, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_xiyl4"]
+material = SubResource("StandardMaterial3D_r7wyq")
+
+[sub_resource type="Theme" id="Theme_hthye"]
+default_font = ExtResource("4_mo2um")
+default_font_size = 22
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_41ket"]
+size = Vector3(1, 5, 35)
+
+[node name="Main" type="Node"]
+script = ExtResource("1_hys7q")
+mob_scene = ExtResource("2_c3u1l")
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1.22498, 0, 0, 0, 0.999526, 0, 0, 0, 1.01877, 0, -1.72065, 3.03129)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_ybem1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+material_override = SubResource("StandardMaterial3D_avm0x")
+mesh = SubResource("BoxMesh_43oif")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.348785, 0.937203, 0, -0.937203, -0.348785, 0, 23.0871, 0)
+visible = false
+light_color = Color(0.443137, 0, 0, 1)
+shadow_enabled = true
+
+[node name="Player" parent="." instance=ExtResource("1_bjjot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.948545, 0)
+collision_mask = 6
+
+[node name="SpawnPath" type="Path3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.718779, 0)
+curve = SubResource("Curve3D_ivfir")
+
+[node name="SpawnLocation" type="PathFollow3D" parent="SpawnPath"]
+transform = Transform3D(0.00299509, 0, -0.999996, 0, 1, 0, 0.999996, 0, 0.00299509, -16.2327, 0, -15.7421)
+
+[node name="Node3D" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.718779, 0)
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.0605, 0.425749, -15.7648)
+mesh = SubResource("CylinderMesh_xiyl4")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.1868, 0.425749, 18.7599)
+mesh = SubResource("CylinderMesh_xiyl4")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.0951, 0.425749, -15.7648)
+mesh = SubResource("CylinderMesh_xiyl4")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.2385, 0.425749, 18.7599)
+mesh = SubResource("CylinderMesh_xiyl4")
+
+[node name="MobTimer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="UserInterface" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_hthye")
+
+[node name="ScoreLabel" type="Label" parent="UserInterface"]
+layout_mode = 0
+offset_left = 27.0
+offset_top = 20.0
+offset_right = 88.0
+offset_bottom = 46.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "Score: 0"
+script = ExtResource("5_sj2js")
+
+[node name="Retry" type="ColorRect" parent="UserInterface"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.415686)
+
+[node name="Label" type="Label" parent="UserInterface/Retry"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -14.0
+offset_right = 20.0
+offset_bottom = 14.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "Press ESPACEBAR or A for Start"
+
+[node name="Node" type="Node" parent="UserInterface"]
+process_mode = 3
+
+[node name="Menu" type="ColorRect" parent="UserInterface/Node"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.415686)
+
+[node name="Button" type="Button" parent="UserInterface/Node/Menu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Continue"
+
+[node name="Button2" type="Button" parent="UserInterface/Node/Menu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -66.5
+offset_top = 25.0
+offset_right = 66.5
+offset_bottom = 61.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Main Menu"
+
+[node name="CameraPivot" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.718779, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.669131, 0.743145, 0, -0.743145, 0.669131, 0, 11, 14)
+projection = 1
+fov = 70.0
+size = 24.999
+
+[node name="Wall" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.0402, 2, 2)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.86047, 0, 1.78026)
+shape = SubResource("BoxShape3D_41ket")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Wall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.9278, 0, 2.46609)
+shape = SubResource("BoxShape3D_41ket")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="Wall"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 19.7209, 0, -13.4395)
+shape = SubResource("BoxShape3D_41ket")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="Wall"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 19.7209, 0, 19.5605)
+shape = SubResource("BoxShape3D_41ket")
+
+[connection signal="hit" from="Player" to="." method="_on_player_hit"]
+[connection signal="timeout" from="MobTimer" to="." method="_on_timer_timeout"]
+[connection signal="pressed" from="UserInterface/Node/Menu/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="UserInterface/Node/Menu/Button2" to="." method="_on_button_2_pressed"]

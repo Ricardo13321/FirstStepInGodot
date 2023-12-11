@@ -1,0 +1,29 @@
+ea4bc82a6ad023ab7ee23ee620429895
+::res://::1701968583
+default_bus_layout.tres::AudioBusLayout::-1::1701363017::0::1::::<><>::
+default_env.tres::Environment::-1::1701363017::0::1::::<><>::
+export_presets.cfg::TextFile::-1::1701805128::0::1::::<><>::
+icon.png::CompressedTexture2D::6845993651799649006::1701362812::1701363057::1::::<><>::
+main.tscn::PackedScene::8376065222733392169::1701803807::0::1::::<><>::uid://clf1bgx5jddua::::res://player.tscn<>res://scripts/main.gd<>uid://y8nwnv46fqta::::res://scripts/mob.tscn<>uid://dbags1hy7fa1q::::res://fonts/Montserrat-Medium.ttf<>res://scripts/ScoreLabel.gd
+main_menu.tscn::PackedScene::8968085274545504780::1701803807::0::1::::<><>::uid://dbags1hy7fa1q::::res://fonts/Montserrat-Medium.ttf<>res://scripts/main_menu.gd<>uid://buh1vgxq0u3ag::::res://art/player.glb
+MusicPlayer.tscn::PackedScene::6048268266712547362::1701803940::0::1::::<><>::uid://2dh3b0yx224p::::res://art/House In a Forest Loop.ogg
+player.tscn::PackedScene::5556821315826504412::1701803808::0::1::::<><>::res://scripts/player.gd<>uid://buh1vgxq0u3ag::::res://art/player.glb
+::res://art/::1701363058
+body.material::StandardMaterial3D::-1::1701362862::0::1::::<><>::
+eye.material::StandardMaterial3D::-1::1701362855::0::1::::<><>::
+House In a Forest Loop.ogg::AudioStreamOggVorbis::1901767024933495901::1701362881::1701363057::1::::<><>::
+mob.glb::PackedScene::4190102826223211030::1701362848::1701363057::1::::<><>::
+mob_body.material::StandardMaterial3D::-1::1701362868::0::1::::<><>::
+mob_eye.material::StandardMaterial3D::-1::1701362874::0::1::::<><>::
+player.glb::PackedScene::3806264695647894118::1701362834::1701363058::1::::<><>::
+pupil.material::StandardMaterial3D::-1::1701362841::0::1::::<><>::
+::res://fonts/::1701363057
+LICENSE.txt::TextFile::-1::1701362896::0::1::::<><>::
+Montserrat-Medium.ttf::FontFile::7229848718518367468::1701362900::1701363057::1::::<><>::
+::res://scripts/::1701803808
+main.gd::GDScript::-1::1701801444::0::1::::<>Node<>::
+main_menu.gd::GDScript::-1::1701802886::0::1::::<>Node<>::
+Mob.gd::GDScript::-1::1701724009::0::1::::<>CharacterBody3D<>::
+mob.tscn::PackedScene::1753486038172335550::1701803808::0::1::::<><>::res://scripts/Mob.gd<>uid://b0xym74hnsjwg::::res://art/mob.glb
+player.gd::GDScript::-1::1701723686::0::1::::<>CharacterBody3D<>::
+ScoreLabel.gd::GDScript::-1::1701711670::0::1::::<>Label<>::

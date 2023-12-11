@@ -1,0 +1,112 @@
+[gd_scene load_steps=8 format=3 uid="uid://clf1bgx5jddua"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_owhf2"]
+[ext_resource type="PackedScene" uid="uid://buh1vgxq0u3ag" path="res://art/player.glb" id="1_sr2oq"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_kjsix"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_83h34"]
+height = 0.312045
+radius = 1.07043
+
+[sub_resource type="Animation" id="Animation_8y1xo"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_uk0s7"]
+resource_name = "float"
+length = 1.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.3, 0.7, 1.2),
+"transitions": PackedFloat32Array(0.420448, 0.44, 2.07),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0.65, 0), Vector3(0, 0.35, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1, 0.5, 1.2),
+"transitions": PackedFloat32Array(0.420448, 0.44, 2.07),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.139626, 0, 0), Vector3(-0.15708, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ly872"]
+_data = {
+"RESET": SubResource("Animation_8y1xo"),
+"float": SubResource("Animation_uk0s7")
+}
+
+[node name="Player" type="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 0.999566, 0.0294545, 0, -0.0294545, 0.999566, 0, 0.627221, 0)
+script = ExtResource("1_owhf2")
+
+[node name="Pivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.997098, -0.0761302, 0, 0.0761302, 0.997098, 0, -0.325831, 0.00982838)
+
+[node name="Character" parent="Pivot" instance=ExtResource("1_sr2oq")]
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Pivot/Character"]
+transform = Transform3D(1, 0, 0, 0, 0.987688, -0.156435, 0, 0.156435, 0.987688, 0, -0.692043, 0.0887941)
+light_color = Color(0.647059, 0.552941, 0, 1)
+light_energy = 15.0
+light_indirect_energy = 5.0
+light_volumetric_fog_energy = 5.0
+shadow_enabled = true
+omni_range = 17.0483
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(2.0905, 0, 0, 0, 1.48439, -0.0261475, 0, 0.0189654, 2.04653, 0, 0, 0)
+shape = SubResource("SphereShape3D_kjsix")
+
+[node name="HitBox" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.0788, 0, 0.615438, -0.0526843)
+shape = SubResource("CylinderShape3D_83h34")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Pivot/Character")
+autoplay = "float"
+libraries = {
+"": SubResource("AnimationLibrary_ly872")
+}
+
+[connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]
